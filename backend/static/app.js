@@ -256,6 +256,7 @@ async function renderInvoices(container) {
                             <th>Customer</th>
                             <th>Amount</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -266,6 +267,7 @@ async function renderInvoices(container) {
                                 <td>${inv.customerName || 'Walk-in'}</td>
                                 <td>₹${parseFloat(inv.grandTotal).toFixed(2)}</td>
                                 <td><span class="badge ${inv.paymentStatus === 'PAID' ? 'badge-success' : 'badge-warning'}">${inv.paymentStatus || 'UNPAID'}</span></td>
+                                <td><button class="btn" style="padding:4px 8px;" onclick="printInvoice('${inv.id}')" title="Print Invoice"><i class="fas fa-print"></i> Print</button></td>
                             </tr>
                         `).join('')}
                     </tbody>
@@ -545,3 +547,124 @@ async function renderBilling(container) {
     // Initial UI render
     updateCartUI();
 }
+
+// --- GLOBAL PRINT FUNCTION ---
+window.printInvoice = async (invoiceId) => {
+    const invoice = await apiCall(`/invoices/${invoiceId}`);
+    if (!invoice) return;
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        showToast('Please allow popups to print invoices', 'error');
+        return;
+    }
+
+    const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Invoice ${invoice.invoiceNumber}</title>
+        <style>
+            body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; margin: 0; padding: 20px; font-size: 14px; }
+            .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 2px solid #333; padding-bottom: 20px; }
+            .logo { height: 60px; }
+            .company-details { text-align: right; }
+            .company-details h1 { margin: 0 0 5px 0; font-size: 24px; color: #333; }
+            .invoice-title { font-size: 28px; font-weight: bold; margin-bottom: 20px; color: #666; text-transform: uppercase; }
+            .meta { display: flex; justify-content: space-between; margin-bottom: 30px; }
+            .meta-box { width: 45%; }
+            .meta-box h3 { margin: 0 0 5px 0; font-size: 16px; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 10px; color: #555; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+            th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+            th { background-color: #f9f9f9; font-weight: bold; color: #333; border-bottom: 2px solid #ddd; }
+            .text-right { text-align: right; }
+            .totals { width: 50%; float: right; }
+            .totals-row { display: flex; justify-content: space-between; padding: 5px 0; }
+            .totals-row.grand-total { font-weight: bold; font-size: 18px; border-top: 2px solid #333; margin-top: 5px; padding-top: 10px; }
+            .footer { clear: both; margin-top: 50px; text-align: center; color: #777; font-size: 12px; border-top: 1px solid #eee; padding-top: 20px; }
+            @media print {
+                body { padding: 0; }
+                @page { margin: 20mm; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div>
+                <img src="/logo.png" alt="ARSH Enterprises Logo" class="logo" onerror="this.style.display='none'">
+            </div>
+            <div class="company-details">
+                <h1>ARSH ENTERPRISES</h1>
+                <p>123 Business Road, City<br>GSTIN: 27AAAAA1234A1Z5<br>Phone: +91 9876543210</p>
+            </div>
+        </div>
+        
+        <div class="invoice-title">INVOICE</div>
+        
+        <div class="meta">
+            <div class="meta-box">
+                <h3>Billed To:</h3>
+                <p><strong>${invoice.customerName || 'Walk-in Customer'}</strong></p>
+            </div>
+            <div class="meta-box text-right">
+                <p><strong>Invoice #:</strong> ${invoice.invoiceNumber}</p>
+                <p><strong>Date:</strong> ${new Date(invoice.invoiceDate).toLocaleDateString()}</p>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Description</th>
+                    <th class="text-right">Qty</th>
+                    <th class="text-right">Price</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${invoice.items.map(item => `
+                <tr>
+                    <td>${item.description}</td>
+                    <td class="text-right">${parseFloat(item.quantity)}</td>
+                    <td class="text-right">₹${parseFloat(item.unitPrice).toFixed(2)}</td>
+                    <td class="text-right">₹${parseFloat(item.total).toFixed(2)}</td>
+                </tr>
+                `).join('')}
+            </tbody>
+        </table>
+        
+        <div class="totals">
+            <div class="totals-row">
+                <span>Subtotal:</span>
+                <span>₹${parseFloat(invoice.subtotal).toFixed(2)}</span>
+            </div>
+            <div class="totals-row">
+                <span>GST:</span>
+                <span>₹${parseFloat(invoice.totalGst).toFixed(2)}</span>
+            </div>
+            <div class="totals-row grand-total">
+                <span>Grand Total:</span>
+                <span>₹${parseFloat(invoice.grandTotal).toFixed(2)}</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Thank you for your business!</p>
+        </div>
+        
+        <script>
+            window.onload = () => {
+                setTimeout(() => {
+                    window.print();
+                    // Optional: window.close() after print if needed
+                }, 500);
+            };
+        </script>
+    </body>
+    </html>
+    `;
+
+    printWindow.document.write(html);
+    printWindow.document.close();
+};
