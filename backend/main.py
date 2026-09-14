@@ -172,18 +172,46 @@ def read_customers(skip: int = 0, limit: int = 100, session: Session = Depends(g
 def read_payments(skip: int = 0, limit: int = 100, session: Session = Depends(get_session)):
     return session.exec(select(Payment).order_by(Payment.paidAt.desc()).offset(skip).limit(limit)).all()
 
-from fastapi.staticfiles import StaticFiles
-import sys
-import os
+from fastapi.responses import FileResponse
 
-if getattr(sys, 'frozen', False):
-    base_dir = sys._MEIPASS
-else:
-    base_dir = os.path.join(os.path.dirname(__file__), '..')
-
-out_dir = os.path.join(base_dir, 'out')
-if os.path.exists(out_dir):
-    app.mount('/', StaticFiles(directory=out_dir, html=True), name='static')
+@app.get("/{full_path:path}")
+async def serve_static(full_path: str):
+    import os
+    import sys
+    
+    if getattr(sys, 'frozen', False):
+        base_dir = sys._MEIPASS
+    else:
+        base_dir = os.path.join(os.path.dirname(__file__), '..')
+    
+    out_dir = os.path.join(base_dir, 'out')
+    
+    # Clean the path
+    if not full_path or full_path == "/":
+        full_path = "index.html"
+        
+    target_path = os.path.join(out_dir, full_path)
+    
+    # Try exact match
+    if os.path.isfile(target_path):
+        return FileResponse(target_path)
+        
+    # Try with .html appended (for Next.js export routes like /dashboard -> dashboard.html)
+    html_path = target_path + ".html"
+    if os.path.isfile(html_path):
+        return FileResponse(html_path)
+        
+    # Try index.html in directory
+    index_path = os.path.join(target_path, "index.html")
+    if os.path.isfile(index_path):
+        return FileResponse(index_path)
+        
+    # Fallback to 404.html if exists, otherwise index.html
+    not_found = os.path.join(out_dir, "404.html")
+    if os.path.isfile(not_found):
+        return FileResponse(not_found, status_code=404)
+        
+    return FileResponse(os.path.join(out_dir, "index.html"))
 
 if __name__ == '__main__':
     import uvicorn
