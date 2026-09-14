@@ -3,7 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, SQLModel, create_engine, select, func
 from sqlalchemy.pool import NullPool
 from typing import List, Dict, Any
-from backend.models import Invoice, ProductOrService, Customer, Payment, InvoiceItem, User
+try:
+    from backend.models import Invoice, ProductOrService, Customer, Payment, InvoiceItem, User
+except ImportError:
+    from models import Invoice, ProductOrService, Customer, Payment, InvoiceItem, User
 from pydantic import BaseModel
 import random
 from datetime import datetime
