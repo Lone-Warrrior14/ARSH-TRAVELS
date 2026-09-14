@@ -8,6 +8,8 @@
     "dev:backend": ".\\backend\\venv\\Scripts\\python.exe -m uvicorn backend.main:app --reload --port 8000 --app-dir .",
     "build": "next build",
     "start": "next start",
+    "start:backend": ".\\backend\\venv\\Scripts\\python.exe -m uvicorn backend.main:app --port 8000 --app-dir .",
+    "start:all": "concurrently \"npm start\" \"npm run start:backend\"",
     "lint": "next lint",
     "test": "vitest run",
     "prisma:generate": "prisma generate",
