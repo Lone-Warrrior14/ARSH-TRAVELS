@@ -8,7 +8,7 @@ echo Installing PyInstaller...
 pip install pyinstaller
 
 echo Compiling...
-pyinstaller --name "ARSH-POS" --onefile --add-data "../out:out" --hidden-import sqlmodel main.py
+pyinstaller --name "ARSH-POS" --onefile --add-data "static:static" --hidden-import sqlmodel main.py
 
 echo.
 echo Build Complete!

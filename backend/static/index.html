@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARSH Enterprises POS</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h2>ARSH POS</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#dashboard" class="nav-item" data-view="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#billing" class="nav-item" data-view="billing"><i class="fas fa-cash-register"></i> POS / Billing</a></li>
+                <li><a href="#invoices" class="nav-item" data-view="invoices"><i class="fas fa-file-invoice-dollar"></i> Invoices</a></li>
+                <li><a href="#payments" class="nav-item" data-view="payments"><i class="fas fa-money-bill-wave"></i> Payments</a></li>
+                <li><a href="#products" class="nav-item" data-view="products"><i class="fas fa-box-open"></i> Products</a></li>
+                <li><a href="#customers" class="nav-item" data-view="customers"><i class="fas fa-users"></i> Customers</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <!-- Dynamic views will be injected here -->
+            <div id="view-container"></div>
+        </main>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container"></div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
