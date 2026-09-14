@@ -173,6 +173,8 @@ def read_payments(skip: int = 0, limit: int = 100, session: Session = Depends(ge
     return session.exec(select(Payment).order_by(Payment.paidAt.desc()).offset(skip).limit(limit)).all()
 
 from fastapi.staticfiles import StaticFiles
+import os
+import sys
 
 static_dir = os.path.join(os.path.dirname(__file__), 'static')
 if getattr(sys, 'frozen', False):
