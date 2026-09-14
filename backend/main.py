@@ -17,7 +17,14 @@ sqlite_url = f"sqlite:///{sqlite_file_name}"
 connect_args = {"check_same_thread": False}
 engine = create_engine(sqlite_url, connect_args=connect_args, poolclass=NullPool)
 
-app = FastAPI(title="ARSH Enterprises Billing API")
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    SQLModel.metadata.create_all(engine)
+    yield
+
+app = FastAPI(title="ARSH Enterprises Billing API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
