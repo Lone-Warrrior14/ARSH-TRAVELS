@@ -1,0 +1,313 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("STAFF")
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  invoices Invoice[] @relation("InvoiceCreator")
+  payments Payment[]
+  audits   AuditLog[]
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String?
+  email        String?
+  address      String?
+  gstin        String?
+  customerType String   @default("RETAIL")
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  invoices Invoice[]
+
+  @@index([name])
+  @@index([phone])
+}
+
+model Category {
+  id       String             @id @default(cuid())
+  name     String             @unique
+  active   Boolean            @default(true)
+  products ProductOrService[]
+}
+
+model Unit {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  active Boolean @default(true)
+}
+
+model ProductOrService {
+  id                String   @id @default(cuid())
+  name              String
+  sku               String?  @unique
+  description       String?
+  itemType          String   @default("PRODUCT")
+  unit              String
+  hsnCode           String?
+  mrp               Decimal
+  sellingPrice      Decimal
+  costPrice         Decimal?
+  gstEnabled        Boolean  @default(true)
+  gstRate           Decimal
+  priceEntryMode    String   @default("INCLUDES_GST")
+  inventoryTracked  Boolean  @default(false)
+  stockQuantity     Decimal  @default(0)
+  minimumStockLevel Decimal  @default(0)
+  active            Boolean  @default(true)
+  notes             String?
+  categoryId        String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  category       Category?         @relation(fields: [categoryId], references: [id])
+  metadata       ProductMetadata?
+  invoiceItems   InvoiceItem[]
+  stockMovements StockMovement[]
+
+  @@index([name])
+  @@index([sku])
+  @@index([itemType])
+}
+
+model ProductMetadata {
+  id                  String    @id @default(cuid())
+  productId           String    @unique
+  brand               String?
+  model               String?
+  variant             String?
+  color               String?
+  storage             String?
+  ram                 String?
+  imei1               String?
+  imei2               String?
+  serialNumber        String?
+  condition           String?
+  warrantyPeriod      String?
+  warrantyExpiry      DateTime?
+  batteryHealth       String?
+  defects             String?
+  includedAccessories String?
+  purchaseDate        DateTime?
+  notes               String?
+
+  product ProductOrService @relation(fields: [productId], references: [id])
+
+  @@index([imei1])
+  @@index([imei2])
+  @@index([serialNumber])
+}
+
+model InvoiceCounter {
+  id         String @id @default(cuid())
+  key        String @unique
+  nextNumber Int
+}
+
+model Invoice {
+  id                String    @id @default(cuid())
+  invoiceNumber     String    @unique
+  invoiceDate       DateTime  @default(now())
+  customerId        String?
+  customerName      String
+  customerPhone     String?
+  customerGstin     String?
+  customerAddress   String?
+  businessName      String
+  businessGstin     String
+  businessAddress   String?
+  businessPhone     String?
+  businessEmail     String?
+  taxSplitMode      String    @default("INTRA_STATE")
+  subtotal          Decimal
+  totalDiscount     Decimal
+  totalTaxableValue Decimal
+  totalCgst         Decimal
+  totalSgst         Decimal
+  totalIgst         Decimal
+  totalGst          Decimal
+  roundOff          Decimal   @default(0)
+  grandTotal        Decimal
+  amountPaid        Decimal   @default(0)
+  balanceDue        Decimal
+  status            String    @default("FINALIZED")
+  paymentStatus     String    @default("UNPAID")
+  notes             String?
+  createdById       String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  cancelledAt       DateTime?
+
+  customer  Customer?     @relation(fields: [customerId], references: [id])
+  createdBy User          @relation("InvoiceCreator", fields: [createdById], references: [id])
+  items     InvoiceItem[]
+  payments  Payment[]
+  refunds   Refund[]
+
+  @@index([invoiceDate])
+  @@index([status])
+  @@index([paymentStatus])
+}
+
+model InvoiceItem {
+  id               String  @id @default(cuid())
+  invoiceId        String
+  productId        String?
+  serialNo         Int
+  itemNameSnapshot String
+  description      String
+  skuSnapshot      String?
+  hsnCodeSnapshot  String?
+  unitSnapshot     String
+  itemTypeSnapshot String  @default("PRODUCT")
+  mrp              Decimal
+  enteredPrice     Decimal
+  priceEntryMode   String  @default("INCLUDES_GST")
+  quantity         Decimal
+  discountType     String  @default("NONE")
+  discountValue    Decimal
+  discountAmount   Decimal
+  taxableValue     Decimal
+  gstRate          Decimal
+  cgst             Decimal
+  sgst             Decimal
+  igst             Decimal
+  totalGst         Decimal
+  lineTotal        Decimal
+
+  invoice  Invoice           @relation(fields: [invoiceId], references: [id])
+  product  ProductOrService? @relation(fields: [productId], references: [id])
+  recharge RechargeDetails?
+  travel   TravelDetails?
+}
+
+model RechargeDetails {
+  id             String  @id @default(cuid())
+  invoiceItemId  String  @unique
+  rechargeType   String
+  operator       String?
+  accountNumber  String?
+  rechargeAmount Decimal
+  serviceCharge  Decimal
+  transactionRef String?
+  status         String  @default("PENDING")
+  notes          String?
+
+  invoiceItem InvoiceItem @relation(fields: [invoiceItemId], references: [id])
+}
+
+model TravelDetails {
+  id               String    @id @default(cuid())
+  invoiceItemId    String    @unique
+  transportType    String
+  provider         String?
+  ticketNumber     String?
+  pnr              String?
+  bookingReference String?
+  passengerName    String?
+  passengerPhone   String?
+  journeyDate      DateTime?
+  source           String?
+  destination      String?
+  seat             String?
+  baseTicketAmount Decimal
+  serviceCharge    Decimal
+  status           String    @default("PENDING")
+  notes            String?
+
+  invoiceItem InvoiceItem @relation(fields: [invoiceItemId], references: [id])
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  invoiceId String
+  userId    String
+  method    String   @default("CASH")
+  amount    Decimal
+  reference String?
+  notes     String?
+  paidAt    DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@index([paidAt])
+}
+
+model Refund {
+  id        String   @id @default(cuid())
+  invoiceId String
+  amount    Decimal
+  reason    String?
+  createdAt DateTime @default(now())
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
+}
+
+model StockMovement {
+  id        String   @id @default(cuid())
+  productId String
+  type      String
+  quantity  Decimal
+  beforeQty Decimal
+  afterQty  Decimal
+  reference String?
+  notes     String?
+  createdAt DateTime @default(now())
+
+  product ProductOrService @relation(fields: [productId], references: [id])
+
+  @@index([createdAt])
+}
+
+model BusinessSettings {
+  id                 String   @id @default(cuid())
+  businessName       String   @default("ARSH ENTERPRISES")
+  address            String?
+  phone              String?
+  email              String?
+  gstin              String   @default("29AIGPR1899C1ZU")
+  state              String   @default("Karnataka")
+  invoiceFooter      String   @default("Thank you for your business.")
+  currency           String   @default("INR")
+  invoicePrefix      String   @default("ARSH")
+  gstEnabled         Boolean  @default(true)
+  defaultGstRate     Decimal  @default(18)
+  defaultTaxMode     String   @default("INCLUDES_GST")
+  defaultTaxSplit    String   @default("INTRA_STATE")
+  allowNegativeStock Boolean  @default(false)
+  updatedAt          DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  entity    String
+  entityId  String?
+  before    String?
+  after     String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([createdAt])
+  @@index([entity, entityId])
+}

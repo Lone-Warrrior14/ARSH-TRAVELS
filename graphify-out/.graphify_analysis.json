@@ -1,0 +1,397 @@
+{
+  "communities": {
+    "0": [
+      "app_billing_page",
+      "app_billing_page_billingpage",
+      "app_billing_pos_engine",
+      "app_billing_pos_engine_posengine",
+      "components_invoice_reference_invoice",
+      "components_invoice_reference_invoice_invoicepreviewdata",
+      "components_invoice_reference_invoice_referenceinvoice",
+      "lib_money",
+      "lib_money_calculateinvoice",
+      "lib_money_calculateline",
+      "lib_money_discountfor",
+      "lib_money_discounttype",
+      "lib_money_lineinput",
+      "lib_money_linetotals",
+      "lib_money_money",
+      "lib_money_priceentrymode",
+      "lib_money_taxsplitmode",
+      "lib_money_zero",
+      "lib_status",
+      "lib_status_paymentstatus",
+      "ref_decimal_js",
+      "ref_react",
+      "ref_vitest",
+      "tests_money_test",
+      "tmp_money_check",
+      "tmp_money_check_checks",
+      "tmp_money_check_exclusive",
+      "tmp_money_check_failed",
+      "tmp_money_check_inclusive",
+      "tmp_money_check_interstate",
+      "tmp_money_check_mixed",
+      "tmp_money_check_nogst"
+    ],
+    "1": [
+      "app_customers_page",
+      "app_customers_page_customerspage",
+      "app_dashboard_page",
+      "app_dashboard_page_dashboardpage",
+      "app_inventory_page",
+      "app_inventory_page_inventorypage",
+      "app_invoices_page",
+      "app_invoices_page_invoicespage",
+      "app_payments_page",
+      "app_payments_page_paymentspage",
+      "app_products_page",
+      "app_products_page_productspage",
+      "app_reports_page",
+      "app_reports_page_reportspage",
+      "app_users_page",
+      "app_users_page_userspage",
+      "components_empty_state",
+      "components_empty_state_emptystate",
+      "components_kpi_card",
+      "components_kpi_card_kpicard",
+      "components_page_header",
+      "components_page_header_pageheader",
+      "components_simple_table",
+      "components_simple_table_simpletable",
+      "lib_api",
+      "lib_api_api_url",
+      "lib_api_fetchfromapi",
+      "lib_money_inr"
+    ],
+    "2": [
+      "lib_validators",
+      "lib_validators_createinvoiceschema",
+      "lib_validators_invoiceitemschema",
+      "lib_validators_productschema",
+      "package",
+      "package_name",
+      "package_prisma",
+      "package_prisma_seed",
+      "package_private",
+      "package_version",
+      "ref_auth_prisma_adapter",
+      "ref_clsx",
+      "ref_concurrently",
+      "ref_libsql_client",
+      "ref_pg",
+      "ref_prisma",
+      "ref_prisma_adapter_libsql",
+      "ref_react_dom",
+      "ref_recharts",
+      "ref_tailwindcss",
+      "ref_tailwindcss_postcss",
+      "ref_tsx",
+      "ref_types_bcryptjs",
+      "ref_types_node",
+      "ref_types_react",
+      "ref_types_react_dom",
+      "ref_typescript",
+      "ref_zod"
+    ],
+    "3": [
+      "backend_main",
+      "backend_main_create_invoice",
+      "backend_main_create_product",
+      "backend_main_get_invoices_agg",
+      "backend_main_get_refunds_agg",
+      "backend_main_invoicecreate",
+      "backend_main_invoiceitemcreate",
+      "backend_main_paymentcreate",
+      "backend_main_read_customers",
+      "backend_main_read_invoices",
+      "backend_main_read_payments",
+      "backend_main_read_products",
+      "backend_models",
+      "backend_models_auditlog",
+      "backend_models_category",
+      "backend_models_customer",
+      "backend_models_generate_id",
+      "backend_models_invoice",
+      "backend_models_invoiceitem",
+      "backend_models_payment",
+      "backend_models_productorservice",
+      "backend_models_user",
+      "backend_models_userbase",
+      "basemodel",
+      "get",
+      "post",
+      "sqlmodel"
+    ],
+    "4": [
+      "app_api_auth_nextauth_route",
+      "app_api_auth_nextauth_route_handler",
+      "backend_main_get_session",
+      "lib_auth",
+      "lib_auth_authoptions",
+      "lib_db",
+      "lib_db_globalforprisma",
+      "lib_db_prisma",
+      "lib_invoice_number",
+      "lib_invoice_number_nextinvoicenumber",
+      "prisma_seed",
+      "prisma_seed_main",
+      "prisma_seed_prisma",
+      "ref_bcryptjs",
+      "ref_next_auth",
+      "ref_prisma_client",
+      "types_next_auth_d",
+      "types_next_auth_d_next_auth",
+      "types_next_auth_d_session"
+    ],
+    "5": [
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include"
+    ],
+    "6": [
+      "package_dependencies",
+      "package_dependencies_auth_prisma_adapter",
+      "package_dependencies_bcryptjs",
+      "package_dependencies_clsx",
+      "package_dependencies_decimal_js",
+      "package_dependencies_libsql_client",
+      "package_dependencies_next",
+      "package_dependencies_next_auth",
+      "package_dependencies_pg",
+      "package_dependencies_prisma_adapter_libsql",
+      "package_dependencies_prisma_client",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_recharts",
+      "package_dependencies_zod"
+    ],
+    "7": [
+      "package_devdependencies",
+      "package_devdependencies_concurrently",
+      "package_devdependencies_prisma",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_tsx",
+      "package_devdependencies_types_bcryptjs",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "package_devdependencies_vitest"
+    ],
+    "8": [
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_dev_backend",
+      "package_scripts_dev_frontend",
+      "package_scripts_lint",
+      "package_scripts_prisma_generate",
+      "package_scripts_prisma_migrate",
+      "package_scripts_prisma_seed",
+      "package_scripts_start",
+      "package_scripts_test"
+    ],
+    "9": [
+      "app_layout",
+      "app_layout_metadata",
+      "app_layout_nav",
+      "app_layout_rootlayout",
+      "next_config",
+      "next_config_nextconfig",
+      "ref_next"
+    ],
+    "10": [
+      "app_settings_page",
+      "app_settings_page_settingspage",
+      "lib_constants",
+      "lib_constants_business",
+      "lib_constants_gstrates",
+      "lib_constants_itemtypes",
+      "lib_constants_paymentmethods"
+    ],
+    "11": [
+      "lib_permissions",
+      "lib_permissions_can",
+      "lib_permissions_rolename",
+      "lib_permissions_rolepermissions"
+    ],
+    "12": [
+      "app_api_health_route",
+      "app_api_health_route_get"
+    ],
+    "13": [
+      "app_login_page",
+      "app_login_page_loginpage"
+    ],
+    "14": [
+      "app_page",
+      "app_page_home"
+    ],
+    "15": [
+      "next_env_d",
+      "next_env_d_rationale_6"
+    ],
+    "16": [
+      "postcss_config",
+      "postcss_config_config"
+    ],
+    "17": [
+      "prisma_config"
+    ],
+    "18": [
+      "vitest_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.0967741935483871,
+    "1": 0.23809523809523808,
+    "2": 0.07142857142857142,
+    "3": 0.1737891737891738,
+    "4": 0.13450292397660818,
+    "5": 0.10526315789473684,
+    "6": 0.13333333333333333,
+    "7": 0.16666666666666666,
+    "8": 0.18181818181818182,
+    "9": 0.2857142857142857,
+    "10": 0.3333333333333333,
+    "11": 0.5,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0
+  },
+  "gods": [
+    {
+      "id": "lib_api_fetchfromapi",
+      "label": "fetchFromApi()",
+      "degree": 17
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "lib_money_inr",
+      "label": "inr()",
+      "degree": 14
+    },
+    {
+      "id": "components_page_header_pageheader",
+      "label": "PageHeader()",
+      "degree": 11
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 11
+    },
+    {
+      "id": "lib_money_calculateinvoice",
+      "label": "calculateInvoice()",
+      "degree": 9
+    },
+    {
+      "id": "backend_main_create_invoice",
+      "label": "create_invoice()",
+      "degree": 7
+    },
+    {
+      "id": "components_empty_state_emptystate",
+      "label": "EmptyState()",
+      "degree": 7
+    },
+    {
+      "id": "lib_money_calculateline",
+      "label": "calculateLine()",
+      "degree": 7
+    },
+    {
+      "id": "backend_models_invoice",
+      "label": "Invoice",
+      "degree": 6
+    }
+  ],
+  "surprises": [
+    {
+      "source": "CustomersPage()",
+      "target": "fetchFromApi()",
+      "source_files": [
+        "app/customers/page.tsx",
+        "lib/api.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `CustomersPage()` unexpectedly reaches hub `fetchFromApi()`"
+    },
+    {
+      "source": "InventoryPage()",
+      "target": "fetchFromApi()",
+      "source_files": [
+        "app/inventory/page.tsx",
+        "lib/api.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `InventoryPage()` unexpectedly reaches hub `fetchFromApi()`"
+    },
+    {
+      "source": "UsersPage()",
+      "target": "fetchFromApi()",
+      "source_files": [
+        "app/users/page.tsx",
+        "lib/api.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `UsersPage()` unexpectedly reaches hub `fetchFromApi()`"
+    },
+    {
+      "source": "ReferenceInvoice()",
+      "target": "calculateInvoice()",
+      "source_files": [
+        "components/invoice/reference-invoice.tsx",
+        "lib/money.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `ReferenceInvoice()` unexpectedly reaches hub `calculateInvoice()`"
+    },
+    {
+      "source": "PosEngine()",
+      "target": "calculateInvoice()",
+      "source_files": [
+        "app/billing/pos-engine.tsx",
+        "lib/money.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}
