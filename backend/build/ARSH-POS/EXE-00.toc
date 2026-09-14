@@ -201,57 +201,65 @@
   ('certifi\\cacert.pem',
    'D:\\arsh enteprise\\backend\\venv\\lib\\site-packages\\certifi\\cacert.pem',
    'DATA'),
-  ('websockets-16.1.1.dist-info\\INSTALLER',
+  ('click-8.5.0.dist-info\\licenses\\LICENSE.txt',
    'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\INSTALLER',
-   'DATA'),
-  ('websockets-16.1.1.dist-info\\METADATA',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\METADATA',
-   'DATA'),
-  ('websockets-16.1.1.dist-info\\top_level.txt',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\top_level.txt',
+   'enteprise\\backend\\venv\\lib\\site-packages\\click-8.5.0.dist-info\\licenses\\LICENSE.txt',
    'DATA'),
   ('click-8.5.0.dist-info\\INSTALLER',
    'D:\\arsh '
    'enteprise\\backend\\venv\\lib\\site-packages\\click-8.5.0.dist-info\\INSTALLER',
    'DATA'),
-  ('email_validator-2.3.0.dist-info\\licenses\\LICENSE',
+  ('pydantic-2.13.5.dist-info\\licenses\\LICENSE',
    'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\licenses\\LICENSE',
+   'enteprise\\backend\\venv\\lib\\site-packages\\pydantic-2.13.5.dist-info\\licenses\\LICENSE',
    'DATA'),
-  ('click-8.5.0.dist-info\\METADATA',
+  ('websockets-16.1.1.dist-info\\INSTALLER',
    'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\click-8.5.0.dist-info\\METADATA',
+   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\INSTALLER',
+   'DATA'),
+  ('websockets-16.1.1.dist-info\\RECORD',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\RECORD',
+   'DATA'),
+  ('itsdangerous-2.2.0.dist-info\\WHEEL',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\itsdangerous-2.2.0.dist-info\\WHEEL',
+   'DATA'),
+  ('websockets-16.1.1.dist-info\\top_level.txt',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\top_level.txt',
+   'DATA'),
+  ('itsdangerous-2.2.0.dist-info\\RECORD',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\itsdangerous-2.2.0.dist-info\\RECORD',
    'DATA'),
   ('click-8.5.0.dist-info\\WHEEL',
    'D:\\arsh '
    'enteprise\\backend\\venv\\lib\\site-packages\\click-8.5.0.dist-info\\WHEEL',
    'DATA'),
-  ('pydantic-2.13.5.dist-info\\RECORD',
+  ('email_validator-2.3.0.dist-info\\top_level.txt',
    'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\pydantic-2.13.5.dist-info\\RECORD',
+   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\top_level.txt',
    'DATA'),
   ('websockets-16.1.1.dist-info\\licenses\\LICENSE',
    'D:\\arsh '
    'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\licenses\\LICENSE',
    'DATA'),
+  ('email_validator-2.3.0.dist-info\\INSTALLER',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\INSTALLER',
+   'DATA'),
+  ('websockets-16.1.1.dist-info\\METADATA',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\METADATA',
+   'DATA'),
   ('pydantic-2.13.5.dist-info\\METADATA',
    'D:\\arsh '
    'enteprise\\backend\\venv\\lib\\site-packages\\pydantic-2.13.5.dist-info\\METADATA',
    'DATA'),
-  ('pydantic-2.13.5.dist-info\\licenses\\LICENSE',
+  ('email_validator-2.3.0.dist-info\\METADATA',
    'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\pydantic-2.13.5.dist-info\\licenses\\LICENSE',
-   'DATA'),
-  ('email_validator-2.3.0.dist-info\\entry_points.txt',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\entry_points.txt',
-   'DATA'),
-  ('itsdangerous-2.2.0.dist-info\\LICENSE.txt',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\itsdangerous-2.2.0.dist-info\\LICENSE.txt',
+   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\METADATA',
    'DATA'),
   ('email_validator-2.3.0.dist-info\\WHEEL',
    'D:\\arsh '
@@ -261,45 +269,9 @@
    'D:\\arsh '
    'enteprise\\backend\\venv\\lib\\site-packages\\itsdangerous-2.2.0.dist-info\\METADATA',
    'DATA'),
-  ('websockets-16.1.1.dist-info\\entry_points.txt',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\entry_points.txt',
-   'DATA'),
-  ('pydantic-2.13.5.dist-info\\WHEEL',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\pydantic-2.13.5.dist-info\\WHEEL',
-   'DATA'),
-  ('email_validator-2.3.0.dist-info\\METADATA',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\METADATA',
-   'DATA'),
-  ('click-8.5.0.dist-info\\RECORD',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\click-8.5.0.dist-info\\RECORD',
-   'DATA'),
-  ('itsdangerous-2.2.0.dist-info\\WHEEL',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\itsdangerous-2.2.0.dist-info\\WHEEL',
-   'DATA'),
-  ('email_validator-2.3.0.dist-info\\top_level.txt',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\top_level.txt',
-   'DATA'),
   ('itsdangerous-2.2.0.dist-info\\INSTALLER',
    'D:\\arsh '
    'enteprise\\backend\\venv\\lib\\site-packages\\itsdangerous-2.2.0.dist-info\\INSTALLER',
-   'DATA'),
-  ('email_validator-2.3.0.dist-info\\RECORD',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\RECORD',
-   'DATA'),
-  ('email_validator-2.3.0.dist-info\\INSTALLER',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\INSTALLER',
-   'DATA'),
-  ('click-8.5.0.dist-info\\licenses\\LICENSE.txt',
-   'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\click-8.5.0.dist-info\\licenses\\LICENSE.txt',
    'DATA'),
   ('websockets-16.1.1.dist-info\\WHEEL',
    'D:\\arsh '
@@ -309,13 +281,41 @@
    'D:\\arsh '
    'enteprise\\backend\\venv\\lib\\site-packages\\pydantic-2.13.5.dist-info\\INSTALLER',
    'DATA'),
-  ('itsdangerous-2.2.0.dist-info\\RECORD',
+  ('email_validator-2.3.0.dist-info\\entry_points.txt',
    'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\itsdangerous-2.2.0.dist-info\\RECORD',
+   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\entry_points.txt',
    'DATA'),
-  ('websockets-16.1.1.dist-info\\RECORD',
+  ('email_validator-2.3.0.dist-info\\RECORD',
    'D:\\arsh '
-   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\RECORD',
+   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\RECORD',
+   'DATA'),
+  ('pydantic-2.13.5.dist-info\\WHEEL',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\pydantic-2.13.5.dist-info\\WHEEL',
+   'DATA'),
+  ('click-8.5.0.dist-info\\METADATA',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\click-8.5.0.dist-info\\METADATA',
+   'DATA'),
+  ('websockets-16.1.1.dist-info\\entry_points.txt',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\websockets-16.1.1.dist-info\\entry_points.txt',
+   'DATA'),
+  ('itsdangerous-2.2.0.dist-info\\LICENSE.txt',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\itsdangerous-2.2.0.dist-info\\LICENSE.txt',
+   'DATA'),
+  ('pydantic-2.13.5.dist-info\\RECORD',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\pydantic-2.13.5.dist-info\\RECORD',
+   'DATA'),
+  ('email_validator-2.3.0.dist-info\\licenses\\LICENSE',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\email_validator-2.3.0.dist-info\\licenses\\LICENSE',
+   'DATA'),
+  ('click-8.5.0.dist-info\\RECORD',
+   'D:\\arsh '
+   'enteprise\\backend\\venv\\lib\\site-packages\\click-8.5.0.dist-info\\RECORD',
    'DATA'),
   ('base_library.zip',
    'D:\\arsh enteprise\\backend\\build\\ARSH-POS\\base_library.zip',
@@ -323,7 +323,7 @@
  [],
  False,
  False,
- 1789366876,
+ 1789367259,
  [('run.exe',
    'D:\\arsh '
    'enteprise\\backend\\venv\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\run.exe',

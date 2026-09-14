@@ -99,7 +99,7 @@ window.addEventListener('DOMContentLoaded', () => {
 async function renderDashboard(container) {
     const invoices = await apiCall('/invoices?limit=100') || [];
     
-    const totalRevenue = invoices.reduce((sum, inv) => sum + (inv.grandTotal || 0), 0);
+    const totalRevenue = invoices.reduce((sum, inv) => sum + (parseFloat(inv.grandTotal) || 0), 0);
     const totalInvoices = invoices.length;
     
     const html = `
@@ -109,7 +109,7 @@ async function renderDashboard(container) {
                 <div class="stat-icon blue"><i class="fas fa-rupee-sign"></i></div>
                 <div class="stat-info">
                     <h3>Total Revenue</h3>
-                    <p>₹${totalRevenue.toFixed(2)}</p>
+                    <p>₹${parseFloat(totalRevenue).toFixed(2)}</p>
                 </div>
             </div>
             <div class="card stat-card">
@@ -149,7 +149,7 @@ async function renderDashboard(container) {
                                 <td>${inv.invoiceNumber}</td>
                                 <td>${new Date(inv.invoiceDate).toLocaleDateString()}</td>
                                 <td>${inv.customerName || 'Walk-in'}</td>
-                                <td>₹${inv.grandTotal.toFixed(2)}</td>
+                                <td>₹${parseFloat(inv.grandTotal).toFixed(2)}</td>
                                 <td><span class="badge ${inv.paymentStatus === 'PAID' ? 'badge-success' : 'badge-warning'}">${inv.paymentStatus || 'UNPAID'}</span></td>
                             </tr>
                         `).join('')}
@@ -187,7 +187,7 @@ async function renderProducts(container) {
                             <tr>
                                 <td>${p.name}</td>
                                 <td>${p.sku || '-'}<br><small style="color:var(--text-secondary)">${p.hsnCode || ''}</small></td>
-                                <td>₹${p.sellingPrice.toFixed(2)}</td>
+                                <td>₹${parseFloat(p.sellingPrice).toFixed(2)}</td>
                                 <td>${p.gstEnabled ? p.gstRate + '%' : 'None'}</td>
                                 <td>${p.inventoryTracked ? p.stockQuantity : 'N/A'}</td>
                             </tr>
@@ -264,7 +264,7 @@ async function renderInvoices(container) {
                                 <td>${inv.invoiceNumber}</td>
                                 <td>${new Date(inv.invoiceDate).toLocaleDateString()}</td>
                                 <td>${inv.customerName || 'Walk-in'}</td>
-                                <td>₹${inv.grandTotal.toFixed(2)}</td>
+                                <td>₹${parseFloat(inv.grandTotal).toFixed(2)}</td>
                                 <td><span class="badge ${inv.paymentStatus === 'PAID' ? 'badge-success' : 'badge-warning'}">${inv.paymentStatus || 'UNPAID'}</span></td>
                             </tr>
                         `).join('')}
@@ -300,7 +300,7 @@ async function renderPayments(container) {
                             <tr>
                                 <td>${new Date(p.paidAt).toLocaleString()}</td>
                                 <td><span class="badge badge-success">${p.method}</span></td>
-                                <td>₹${p.amount.toFixed(2)}</td>
+                                <td>₹${parseFloat(p.amount).toFixed(2)}</td>
                                 <td>${p.reference || '-'}</td>
                             </tr>
                         `).join('')}
@@ -325,7 +325,13 @@ async function renderBilling(container) {
         if (existing) {
             existing.quantity += 1;
         } else {
-            state.cart.push({ product: prod, quantity: 1 });
+            state.cart.push({ 
+                product: prod, 
+                quantity: 1,
+                unitPrice: parseFloat(prod.sellingPrice) || 0,
+                gstRate: parseFloat(prod.gstRate) || 0,
+                priceEntryMode: prod.priceEntryMode || "EXCLUDES_GST"
+            });
         }
         updateCartUI();
     };
@@ -341,35 +347,54 @@ async function renderBilling(container) {
         }
     };
     
+    window.updateCartItem = (productId, field, value) => {
+        const item = state.cart.find(i => i.product.id === productId);
+        if (item) {
+            if (field === 'unitPrice' || field === 'gstRate') {
+                item[field] = parseFloat(value) || 0;
+            } else {
+                item[field] = value;
+            }
+            updateCartUI();
+        }
+    };
+    
     window.processSale = async () => {
         if (state.cart.length === 0) {
             showToast('Cart is empty', 'error');
             return;
         }
         
-        // Basic calculation for invoice structure
         let subtotal = 0;
         let totalGst = 0;
         
         const items = state.cart.map(item => {
             const p = item.product;
-            const price = p.sellingPrice;
+            const price = item.unitPrice;
             const qty = item.quantity;
-            const total = price * qty;
+            let itemTotal = price * qty;
             
             let taxAmt = 0;
+            let baseValue = itemTotal;
+            
             if (p.gstEnabled) {
-                taxAmt = total * (p.gstRate / 100);
+                if (item.priceEntryMode === "INCLUDES_GST") {
+                    baseValue = itemTotal / (1 + (item.gstRate / 100));
+                    taxAmt = itemTotal - baseValue;
+                } else {
+                    taxAmt = itemTotal * (item.gstRate / 100);
+                    itemTotal = itemTotal + taxAmt;
+                }
                 totalGst += taxAmt;
             }
-            subtotal += total;
+            subtotal += baseValue;
             
             return {
                 description: p.name,
                 quantity: qty,
                 unitPrice: price,
-                total: total,
-                taxRate: p.gstEnabled ? p.gstRate : 0,
+                total: itemTotal,
+                taxRate: p.gstEnabled ? item.gstRate : 0,
                 taxAmount: taxAmt
             };
         });
@@ -395,7 +420,6 @@ async function renderBilling(container) {
             state.cart = [];
             updateCartUI();
             
-            // Auto add a payment record
             await apiCall('/payments', 'POST', {
                 invoiceId: res.id,
                 amount: grandTotal,
@@ -417,7 +441,7 @@ async function renderBilling(container) {
                     ${state.products.map(p => `
                         <div class="product-card" onclick="addToCart('${p.id}')">
                             <div class="product-name">${p.name}</div>
-                            <div class="product-price">₹${p.sellingPrice.toFixed(2)}</div>
+                            <div class="product-price">₹${parseFloat(p.sellingPrice).toFixed(2)}</div>
                         </div>
                     `).join('')}
                 </div>
@@ -456,25 +480,45 @@ async function renderBilling(container) {
         
         cartItemsDiv.innerHTML = state.cart.map(item => {
             const p = item.product;
-            const itemTotal = p.sellingPrice * item.quantity;
-            subtotal += itemTotal;
+            const price = item.unitPrice;
+            const qty = item.quantity;
+            let itemTotal = price * qty;
+            
+            let taxAmt = 0;
+            let baseValue = itemTotal;
+            
             if (p.gstEnabled) {
-                totalTax += itemTotal * (p.gstRate / 100);
+                if (item.priceEntryMode === "INCLUDES_GST") {
+                    baseValue = itemTotal / (1 + (item.gstRate / 100));
+                    taxAmt = itemTotal - baseValue;
+                } else {
+                    taxAmt = itemTotal * (item.gstRate / 100);
+                    itemTotal = itemTotal + taxAmt;
+                }
+                totalTax += taxAmt;
             }
+            subtotal += baseValue;
             
             return `
-                <div class="cart-item">
-                    <div style="flex:1;">
+                <div class="cart-item" style="flex-direction:column; align-items:stretch; gap:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div style="font-weight:500; color:white;">${p.name}</div>
-                        <div style="font-size:0.875rem; color:var(--text-secondary);">₹${p.sellingPrice.toFixed(2)}</div>
+                        <div style="font-weight:600; color:white;">₹${itemTotal.toFixed(2)}</div>
                     </div>
-                    <div class="cart-qty-controls">
-                        <button class="cart-qty-btn" onclick="updateQty('${p.id}', -1)"><i class="fas fa-minus"></i></button>
-                        <span style="width:24px; text-align:center; font-weight:600;">${item.quantity}</span>
-                        <button class="cart-qty-btn" onclick="updateQty('${p.id}', 1)"><i class="fas fa-plus"></i></button>
-                    </div>
-                    <div style="width:80px; text-align:right; font-weight:600; color:white;">
-                        ₹${itemTotal.toFixed(2)}
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <div class="cart-qty-controls">
+                            <button class="cart-qty-btn" onclick="updateQty('${p.id}', -1)"><i class="fas fa-minus"></i></button>
+                            <span style="width:24px; text-align:center; font-weight:600;">${item.quantity}</span>
+                            <button class="cart-qty-btn" onclick="updateQty('${p.id}', 1)"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <input type="number" value="${item.unitPrice}" step="0.01" class="form-control" style="width:80px; padding:4px;" onchange="updateCartItem('${p.id}', 'unitPrice', this.value)" title="Unit Price">
+                        ${p.gstEnabled ? `
+                        <input type="number" value="${item.gstRate}" step="0.1" class="form-control" style="width:60px; padding:4px;" onchange="updateCartItem('${p.id}', 'gstRate', this.value)" title="GST %">
+                        <select class="form-control" style="width:auto; padding:4px;" onchange="updateCartItem('${p.id}', 'priceEntryMode', this.value)" title="GST Mode">
+                            <option value="EXCLUDES_GST" ${item.priceEntryMode === 'EXCLUDES_GST' ? 'selected' : ''}>+ GST</option>
+                            <option value="INCLUDES_GST" ${item.priceEntryMode === 'INCLUDES_GST' ? 'selected' : ''}>Inc. GST</option>
+                        </select>
+                        ` : ''}
                     </div>
                 </div>
             `;
@@ -483,15 +527,15 @@ async function renderBilling(container) {
         summaryDiv.innerHTML = `
             <div class="cart-totals">
                 <div class="cart-row">
-                    <span>Subtotal</span>
+                    <span>Base Subtotal</span>
                     <span>₹${subtotal.toFixed(2)}</span>
                 </div>
                 <div class="cart-row">
-                    <span>GST (Estimated)</span>
+                    <span>Total GST</span>
                     <span>₹${totalTax.toFixed(2)}</span>
                 </div>
                 <div class="cart-row grand-total">
-                    <span>Total</span>
+                    <span>Grand Total</span>
                     <span>₹${(subtotal + totalTax).toFixed(2)}</span>
                 </div>
             </div>
