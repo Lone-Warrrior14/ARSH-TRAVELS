@@ -1,11 +1,15 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { SimpleTable } from "@/components/simple-table";
-import { fetchFromApi } from "@/lib/api";
 import { inr } from "@/lib/money";
+import { useApi } from "@/app/useApi";
 
-export default async function ProductsPage() {
-  const products = await fetchFromApi("/products?limit=100") || [];
+export default function ProductsPage() {
+  const { data: products, loading } = useApi<any[]>("/products?limit=100", []);
+
+  if (loading) return <div className="p-8 text-gray-500">Loading products...</div>;
   return (
     <>
       <PageHeader title="Products & Services" subtitle="Catalog for products, services, tickets, recharges, mobiles, stationery, online services, and custom categories." action={<button className="rounded-md bg-teal-700 px-4 py-2 text-sm font-semibold text-white">Add item</button>} />

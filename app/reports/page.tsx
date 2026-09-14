@@ -1,13 +1,15 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
 import { KpiCard } from "@/components/kpi-card";
-import { fetchFromApi } from "@/lib/api";
 import { inr } from "@/lib/money";
+import { useApi } from "@/app/useApi";
 
-export default async function ReportsPage() {
-  const [salesResponse, refundsResponse] = await Promise.all([
-    fetchFromApi("/reports/invoices-agg"),
-    fetchFromApi("/reports/refunds-agg")
-  ]).catch(() => [null, null]);
+export default function ReportsPage() {
+  const { data: salesResponse, loading: l1 } = useApi<any>("/reports/invoices-agg", null);
+  const { data: refundsResponse, loading: l2 } = useApi<any>("/reports/refunds-agg", null);
+
+  if (l1 || l2) return <div className="p-8 text-gray-500">Loading reports...</div>;
 
   const sales = (salesResponse && salesResponse._sum) ? salesResponse : { _sum: { grandTotal: 0, totalGst: 0, totalDiscount: 0 } };
   const refunds = (refundsResponse && refundsResponse._sum) ? refundsResponse : { _sum: { amount: 0 } };

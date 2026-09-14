@@ -91,9 +91,9 @@ export function PosEngine() {
         <div className="text-teal-600 text-6xl">✓</div>
         <h1 className="text-3xl font-bold">Invoice Finalized Successfully!</h1>
         <div className="flex gap-4 mt-4">
-          <button 
-            className="rounded-md bg-teal-700 px-6 py-3 text-lg font-semibold text-white shadow-md hover:bg-teal-800"
-            onClick={() => window.open(`/invoices/${finalizedInvoiceId}/print`, '_blank')}
+          <button
+            onClick={() => window.open(`/print?id=${finalizedInvoiceId}`, '_blank')}
+            className="flex-1 rounded-md bg-teal-600 px-4 py-2 text-white font-medium hover:bg-teal-700"
           >
             Print Invoice
           </button>

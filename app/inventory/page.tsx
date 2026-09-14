@@ -1,10 +1,14 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { SimpleTable } from "@/components/simple-table";
-import { fetchFromApi } from "@/lib/api";
+import { useApi } from "@/app/useApi";
 
-export default async function InventoryPage() {
-  const products = await fetchFromApi("/products?limit=100") || [];
+export default function InventoryPage() {
+  const { data: products, loading } = useApi<any[]>("/products?limit=100", []);
+
+  if (loading) return <div className="p-8 text-gray-500">Loading inventory...</div>;
   return (
     <>
       <PageHeader title="Inventory" subtitle="Optional stock tracking, movement history, IMEI/serial metadata, low-stock alerts, and invoice stock reversal." />

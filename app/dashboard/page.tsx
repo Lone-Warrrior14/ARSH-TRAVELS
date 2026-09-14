@@ -1,18 +1,17 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
 import { KpiCard } from "@/components/kpi-card";
 import { EmptyState } from "@/components/empty-state";
-import { fetchFromApi } from "@/lib/api";
 import { inr } from "@/lib/money";
+import { useApi } from "@/app/useApi";
 
-export default async function DashboardPage() {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+export default function DashboardPage() {
+  const { data: invoices, loading: loading1 } = useApi<any[]>("/invoices?limit=6", []);
+  const { data: payments, loading: loading2 } = useApi<any[]>("/payments?limit=100", []);
+  const { data: lowStock, loading: loading3 } = useApi<any[]>("/products?limit=5", []);
 
-  const [invoices, payments, lowStock] = await Promise.all([
-    fetchFromApi("/invoices?limit=6") || [],
-    fetchFromApi("/payments?limit=100") || [], // In real app, pass date filter
-    fetchFromApi("/products?limit=5") || [] // In real app, pass low stock filter
-  ]).catch(() => [[], [], []] as const);
+  if (loading1 || loading2 || loading3) return <div className="p-8 text-gray-500">Loading dashboard...</div>;
 
   const sales = invoices.reduce((acc, invoice) => acc + Number(invoice.grandTotal), 0);
   const collected = payments.reduce((acc, payment) => acc + Number(payment.amount), 0);

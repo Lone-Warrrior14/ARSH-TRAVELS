@@ -1,10 +1,14 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { SimpleTable } from "@/components/simple-table";
-import { fetchFromApi } from "@/lib/api";
+import { useApi } from "@/app/useApi";
 
-export default async function CustomersPage() {
-  const customers = await fetchFromApi("/customers?limit=100") || [];
+export default function CustomersPage() {
+  const { data: customers, loading } = useApi<any[]>("/customers?limit=100", []);
+
+  if (loading) return <div className="p-8 text-gray-500">Loading customers...</div>;
   return (
     <>
       <PageHeader title="Customers" subtitle="Customer profiles, phone search, GSTIN, invoice history, payments, and outstanding balances." action={<button className="rounded-md bg-teal-700 px-4 py-2 text-sm font-semibold text-white">Add customer</button>} />

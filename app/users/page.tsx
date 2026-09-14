@@ -1,9 +1,13 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
 import { SimpleTable } from "@/components/simple-table";
-import { fetchFromApi } from "@/lib/api";
+import { useApi } from "@/app/useApi";
 
-export default async function UsersPage() {
-  const users = await fetchFromApi("/users?limit=100") || [];
+export default function UsersPage() {
+  const { data: users, loading } = useApi<any[]>("/users?limit=100", []);
+
+  if (loading) return <div className="p-8 text-gray-500">Loading users...</div>;
   return (
     <>
       <PageHeader title="Users and Roles" subtitle="Admin-only role and permission management. Backend authorization must guard sensitive actions." />

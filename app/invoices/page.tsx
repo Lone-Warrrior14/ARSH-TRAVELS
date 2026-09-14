@@ -1,11 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
-import { fetchFromApi } from "@/lib/api";
 import { inr } from "@/lib/money";
+import { useApi } from "@/app/useApi";
 
-export default async function InvoicesPage() {
-  const invoices = await fetchFromApi("/invoices?limit=50") || [];
+export default function InvoicesPage() {
+  const { data: invoices, loading } = useApi<any[]>("/invoices?limit=50", []);
+
+  if (loading) return <div className="p-8 text-gray-500">Loading invoices...</div>;
   return (
     <>
       <PageHeader title="Invoices" subtitle="Search, print, duplicate, cancel, refund, and record payments without changing finalized history." action={<Link href="/billing" className="rounded-md bg-teal-700 px-4 py-2 text-sm font-semibold text-white">New bill</Link>} />
@@ -24,7 +28,7 @@ export default async function InvoicesPage() {
                     <td>Rs. {inr(invoice.amountPaid.toString())}</td>
                     <td>Rs. {inr(invoice.balanceDue.toString())}</td>
                     <td className="text-right">
-                      <Link href={`/invoices/${invoice.id}/print`} target="_blank" className="text-teal-600 hover:underline font-medium text-sm">Print</Link>
+                      <Link href={`/print?id=${invoice.id}`} target="_blank" className="text-teal-600 hover:underline font-medium text-sm">Print</Link>
                     </td>
                   </tr>
                 ))}

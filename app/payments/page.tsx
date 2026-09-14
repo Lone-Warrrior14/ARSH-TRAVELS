@@ -1,11 +1,15 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
 import { SimpleTable } from "@/components/simple-table";
-import { fetchFromApi } from "@/lib/api";
 import { inr } from "@/lib/money";
+import { useApi } from "@/app/useApi";
 
-export default async function PaymentsPage() {
-  const payments = await fetchFromApi("/payments?limit=100") || [];
+export default function PaymentsPage() {
+  const { data: payments, loading } = useApi<any[]>("/payments?limit=100", []);
+
+  if (loading) return <div className="p-8 text-gray-500">Loading payments...</div>;
   return (
     <>
       <PageHeader title="Payments" subtitle="Record full payments, partial payments, multiple collections, references, refunds, and history." />

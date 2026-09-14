@@ -161,3 +161,29 @@ def read_customers(skip: int = 0, limit: int = 100, session: Session = Depends(g
 @app.get("/api/payments", response_model=List[Payment])
 def read_payments(skip: int = 0, limit: int = 100, session: Session = Depends(get_session)):
     return session.exec(select(Payment).order_by(Payment.paidAt.desc()).offset(skip).limit(limit)).all()
+
+from fastapi.staticfiles import StaticFiles
+import sys
+import os
+
+if getattr(sys, 'frozen', False):
+    base_dir = sys._MEIPASS
+else:
+    base_dir = os.path.join(os.path.dirname(__file__), '..')
+
+out_dir = os.path.join(base_dir, 'out')
+if os.path.exists(out_dir):
+    app.mount('/', StaticFiles(directory=out_dir, html=True), name='static')
+
+if __name__ == '__main__':
+    import uvicorn
+    import threading
+    import time
+    import webbrowser
+
+    def open_browser():
+        time.sleep(1.5)
+        webbrowser.open('http://localhost:8000/')
+
+    threading.Thread(target=open_browser, daemon=True).start()
+    uvicorn.run(app, host='127.0.0.1', port=8000)
